@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <conio.h>
 using namespace std;
 
 void lanzardado12c (int RONDAS,int DADOS12, int mj [ ] [RONDAS+1] [DADOS12], int juego, int turno)

@@ -1,22 +1,24 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-ventas.altosdemaschwitz@gmail.com
+#include <conio.h>
+
 using namespace std;
 
 int main()
 {
     ///Variables y constantes
-    int opciones = 0, JUEGOSALM=5  DADOSMAX=11, RONDAS=5, DADOS12=2, contadorjuego=-1, contadorturno = 0, dadonombre1 = 0, dadonombre2 = 0, valorobjetivo = 0, dado6jug1 = 0, dado6jug2 = 0 ;
+    int opciones = 0, JUEGOSALM=5  DADOSMAX=11, RONDAS=5, DADOS12=2, contadorjuego=-1, contadorturno = 0, dadonombre1 = 0, dadonombre2 = 0, valorobjetivo = 0, dadostockj1 = 0, dadostockj2 = 0 ;
     char opciones2;
     bool verificador=false, verificadornombre=false;
     int MtiradasD6J1 [JUEGOSALM][RONDAS][DADOSMAX];   // para almacenar las tiradas de 6 caras del Jugador 1
     int MtiradasD6J2 [JUEGOSALM][RONDAS][DADOSMAX];   // para almacenar las tiradas de 6 caras del Jugador 2
-    int MtiradasD12 [JUEGOSALM][RONDAS+1][DADOS12];     // para almacenar las tiradas para definir quien inicia y las del valor objetivo
-    int MpuntajeJ1 [JUEGOSALM][1];                                            // para almacenar los puntajes finales del Jugador 1
-    int MpuntajeJ2 [JUEGOSALM][1];                                            // para almacenar los puntajes finales del Jugador 2
+    int MtiradasD12 [JUEGOSALM][RONDAS+1][DADOS12];   // para almacenar las tiradas para definir quien inicia y las del valor objetivo
+    int VpuntajeJ1 [JUEGOSALM];                       // para almacenar los puntajes finales del Jugador 1
+    int VpuntajeJ2 [JUEGOSALM];                       // para almacenar los puntajes finales del Jugador 2
     string nombre1, nombre2, Vjugador1[JUEGOSALM], Vjugador2[JUEGOSALM] ;
     // TODO: poner la semilla del randomizador
+    // TODO: ver como usar la libreria conio.h para cambiar colores de las fuentes y el fondo
     while (opciones != 4)
     {
         verificador = false;
@@ -79,22 +81,72 @@ int main()
                   }
                 }
             }
+            // definir el orden en que jugaran
             cout << endl << "--------------------------------------------------------------";
             cout << endl << "ahora se definira el orden en que jugaran" << endl;
-            system ("pause");
-            /// definir el orden en que jugaran
-            dadonombre1 = dadonombre2 = contadorturno = 0;
-            lanzardado12c (RONDAS, DADOS12, MtiradasD12, contadorjuego, contadorturno);
-            cout << endl << nombre1 << " obtuvo un: " << MtiradasD12 [contadorjuego][contadorturno][x];
-            cout << endl << nombre2 << " obtuvo un: " << MtiradasD12 [contadorjuego][contadorturno][x];
-
-            /// repartir dados stock, poner contador de turnos en 0
+            do
+            {
+                system ("pause");
+                contadorturno = 0;
+                verificador = false;
+                lanzardado12c (RONDAS, DADOS12, MtiradasD12, contadorjuego, contadorturno);
+                cout << "------------";
+                cout << endl << nombre1 << " obtuvo un: " << MtiradasD12 [contadorjuego][contadorturno][0];
+                cout << endl << nombre2 << " obtuvo un: " << MtiradasD12 [contadorjuego][contadorturno][1];
+                cout << "------------";
+                if (MtiradasD12 [contadorjuego][contadorturno][0] != MtiradasD12 [contadorjuego][contadorturno][1])
+                {
+                   verificador = true;
+                }
+                else
+                {
+                    cout << endl << "parece que hubo un empate, deberan tirar nuevamente"
+                }
+            }
+            while (verificador == false);
+            if (MtiradasD12 [contadorjuego][contadorturno][0] > MtiradasD12 [contadorjuego][contadorturno][1])
+            {
+                Vjugador1 [contadorjuego] = nombre1;
+                Vjugador2 [contadorjuego] = nombre2;
+            }
+            else
+            {
+                Vjugador1 [contadorjuego] = nombre2;
+                Vjugador2 [contadorjuego] = nombre1;
+            }
+            /// repartir dados stock, poner contador de turnos en 1
+            dadostockj1 = dadostockj2 = 6;
+            contadorturno++
+            cout << endl << "################ AHORA COMIENZA EL JUEGO ################";
             /// REPETIR 5 VECES
                 /// mostrar numero de ronda, nombre de quien esta jugando, puntaje acumulado de ambos, cantidad Dados de Stock de ambos
+                cout << endl << "----";
+                cout << endl << "Ronda N°: " << contadorturno << endl;
+                cout << Vjugador1 [contadorjuego] << " - puntaje: " << VpuntajeJ1 [contadorjuego] << " - Dados de Stock: " << dadostockj1;
+                cout << Vjugador2 [contadorjuego] << " - puntaje: " << VpuntajeJ2 [contadorjuego] << " - Dados de Stock: " << dadostockj2;
+                cout << endl << "----";
                 /// obtener el Valor Objetivo de la ronda haciendo que el Jugador 1 lance 2D12
+                cout << endl << Vjugador1 [contadorjuego] << " por favor tira los dados de 12 caras para determinar el valor objetivo de esta ronda";
+                system ("pause"); // o quizas getch ()
+                lanzardado12c (RONDAS, DADOS12, MtiradasD12, contadorjuego, contadorturno);
                 /// agregar o actualizar a lo que se muestra el Valor Objetivo
+                // TODO: ver como usar clrscr para limpiar y reemplazar por el nuevo
+                cout << endl << "----";
+                cout << endl << "Ronda N°: " << contadorturno << endl;
+                cout << Vjugador1 [contadorjuego] << " - puntaje: " << VpuntajeJ1 [contadorjuego] << " - Dados de Stock: " << dadostockj1;
+                cout << Vjugador2 [contadorjuego] << " - puntaje: " << VpuntajeJ2 [contadorjuego] << " - Dados de Stock: " << dadostockj2;
+                cout << endl << "salieron : " << MtiradasD12 [contadorjuego] [contadorturno] [0] << " y " << MtiradasD12 [contadorjuego] [contadorturno] [1] << " / VALOR OBJETIVO: " << MtiradasD12 [contadorjuego] [contadorturno] [0] + MtiradasD12 [contadorjuego] [contadorturno] [1];
+                cout << endl << "----";
                 /// lanzar Dados de Stock del Jugador 1
+                cout << endl << endl << "Por favor, " << Vjugador1 [contadorjuego] << " lanza tus dados de stock";
+                system ("pause");
+                lanzardado6c (RONDAS, DADOSMAX, MtiradasD6J1, dadostockj1, contadorjuego, contadorturno);
                 /// mostrar valores de los dados
+                cout << endl << "resultados: ";
+                for (int x=0, x<dadostockj1, x++)
+                {
+                    cout << endl << "dado N° " << x+1 << ": " << MtiradasD6J1 [contadorjuego] [contadorturno] [x];
+                }
                 /// Dar chance al Jugador 1 que verifique si puede sumar el Valor Objetivo
                     ///SI - calcular puntaje
                     ///SI - sumar puntaje
