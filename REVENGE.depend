@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1639056857 source:c:\users\kyanon\dropbox\tecnicatura programacion\1q - laboratorio de computacion i\tp revenge\revenge\funciones.cpp
+	<iostream>
+	<cstdlib>
+	<string.h>
+	"funciones.h"
+
+1639056764 c:\users\kyanon\dropbox\tecnicatura programacion\1q - laboratorio de computacion i\tp revenge\revenge\funciones.h
+
+1639056173 source:c:\users\kyanon\dropbox\tecnicatura programacion\1q - laboratorio de computacion i\tp revenge\revenge\main.cpp
+	<iostream>
+	<cstdlib>
+	<stdlib.h>
+	<ctime>
+	<string.h>
+	"funciones.h"
+
